@@ -43,9 +43,12 @@ jobs:
           git add .
           if ! git diff --cached --quiet; then
             git commit -m "🤖 robot: auto-clean unused imports & variables"
-            git notes add -m "robot: true"
-            git push origin HEAD
+
+            # Inline Git Notes
+            git notes add -m "robot: true" || true
             git push origin refs/notes/* || true
+
+            git push origin HEAD
           else
             echo "No autoflake changes to commit."
           fi
@@ -266,10 +269,13 @@ jobs:
 
           if ! git diff --cached --quiet; then
             git commit -m "🤖 robot: STEP processor trigger log"
-            git notes add -m "robot: true"
+
+            # Inline Git Notes
+            git notes add -m "robot: true" || true
+            git push origin refs/notes/* || true
+
             git pull --rebase origin main || echo "⚠️ Rebase failed — check for conflicts"
             git push origin main
-            git push origin refs/notes/* || true
           else
             echo "No new logs or errors to commit."
           fi
